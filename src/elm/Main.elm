@@ -1,13 +1,23 @@
 module Main exposing (main)
 
-import Browser exposing (Document)
-import Html exposing (Html, button, div, img, text)
-import Html.Attributes exposing (src)
-import Html.Events exposing (onClick)
+import Browser
+import Html
+import Html.Attributes as Attributes
+import Html.Events as Events
 
 
+main : Program Flags Model Msg
 main =
-    Browser.document { init = init, update = update, view = view, subscriptions = subscriptions }
+    Browser.document
+        { init = init
+        , update = update
+        , view = view
+        , subscriptions = subscriptions
+        }
+
+
+type alias Flags =
+    ()
 
 
 type alias Model =
@@ -19,35 +29,41 @@ type Msg
     | Decrement
 
 
-init : () -> ( Model, Cmd Msg )
+init : Flags -> ( Model, Cmd Msg )
 init _ =
-    ( 0, Cmd.none )
+    ( 0
+    , Cmd.none
+    )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Increment ->
-            ( model + 1, Cmd.none )
+            ( model + 1
+            , Cmd.none
+            )
 
         Decrement ->
-            ( model - 1, Cmd.none )
+            ( model - 1
+            , Cmd.none
+            )
 
 
-view : Model -> Document Msg
+view : Model -> Browser.Document Msg
 view model =
     let
-        html =
-            [ div []
-                [ button [ onClick Decrement ] [ text "-" ]
-                , div [] [ text (String.fromInt model) ]
-                , button [ onClick Increment ] [ text "+" ]
+        body =
+            [ Html.div []
+                [ Html.button [ Events.onClick Decrement ] [ Html.text "-" ]
+                , Html.div [] [ Html.text (String.fromInt model) ]
+                , Html.button [ Events.onClick Increment ] [ Html.text "+" ]
                 ]
-            , img [ src "/img/image.svg" ] []
+            , Html.img [ Attributes.src "/img/image.svg" ] []
             ]
     in
     { title = "Elm Webpack Boilerplate"
-    , body = html
+    , body = body
     }
 
 
