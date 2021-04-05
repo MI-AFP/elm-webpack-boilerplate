@@ -1,7 +1,7 @@
 'use strict';
 
-var program = require('./elm/Main.elm');
+import { Elm } from './elm/Main.elm';
 
-var app = program.Elm.Main.init({
+Elm.Main.init({
     flags: {}
 });
